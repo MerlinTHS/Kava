@@ -1,5 +1,7 @@
 package com.github.merlinths.kava
 
+import java.util.*
+
 interface ValidScope<ScopeType> {
     /**
      * This method stops execution of the current [ValidScope].
@@ -20,4 +22,10 @@ interface ValidScope<ScopeType> {
      */
     operator fun <Type: Any> Type?.component1(): Type =
         this ?: fail()
+
+    operator fun <Type: Any> Optional<Type>.component1(): Type =
+        if (isPresent)
+            this.get()
+        else
+            fail()
 }

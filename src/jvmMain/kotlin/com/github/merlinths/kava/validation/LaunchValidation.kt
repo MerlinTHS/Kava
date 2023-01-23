@@ -18,3 +18,4 @@ fun <Type, WrapperType> Validator<Type, WrapperType>.launchValidation(
         }
     }
 }
+
