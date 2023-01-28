@@ -1,24 +1,122 @@
 # Kava
 
 Kava is a kotlin library to reduce boilderplate code in the scope of validations.
-
-It's purpose is to provide a flat and easy-to-read DSL for working with optional types.
+It provides a flat and easy-to-read DSL for working with optional types.
 
 ## Getting started
 
-Kava comes with a few top-level functions for creating optional datatypes.
+Kava comes with a few top-level functions for creating optional data types
 - ```nullable``` for nullable types
 - ```optional``` for types wrapped into ```java.util.Optional```
 
-There are two ways to use Kava in a ```ValidScope```.
+There's also a ```validate``` function which returns an ```ValidationResult```.
+This result can be used to call the extension functions ```onSuccess``` or```onFailure```.
 
-### Direct syntax using ```ensure```
+```kotlin
+import com.github.merlinths.kava.validator.*
 
+fun getName(): String? = "Kava"
 
+fun main() {
+    validate {
+        val name by getName()
 
-### Destructuring syntax
+        println("Hello $name!")
+    } onSuccess {
+        println("Success is all around us!")
+    } onFailure {
+        println("Operation failed!")
+    }
+}
+```
 
+The code inside ```validate``` runs in the context of a ```ValidationScope```.
+This scope allows you to use **delegated validations**. Each of the validations
+either returns a validated instance of its type or fails, which results
+in the end of the ```ValidationScope```. In the example above, the scope
+would have been left, if ```getName``` had returned ```null```. 
+<br />
+>To achieve this stop of execution, a ```ValidationException``` is thrown.
+So be careful when catching exceptions inside a ```ValidationScope```.
 
+### Validation by Delegation
+
+```kotlin
+import com.github.merlinths.kava.validator.*
+import java.util.Optional
+
+data class Person(
+    val name: String,
+    val age: Int
+)
+
+fun main() = validate {
+    val person by getPerson()
+    
+    println("${person.name} is ${person.age} years old!")
+}
+
+fun getPerson() = Optional.of(
+    Person(name = "Peter", age = 42)
+)
+```
+
+### Preconditions
+
+Use ```ensure``` to check conditions. It uses *Kotlin Contracts* to gain better
+IDE assistance.
+
+Given a nullable property ```1```.
+Instead of declaring a new property, that's delegated by validation ```2```.
+You can use ```ensure``` to treat the old one as a non-nullable type ```3```.
+
+```kotlin
+// Nullable Property (1)
+val maybeName: String? = "Peter"
+
+// Delegated Validation (2)
+val name by maybeName
+
+// Ensured Conditions (3)
+ensure (maybeName != null)
+```
+
+Or use the trailing lambda syntax to combine multiple condition of the
+same receiver.
+
+```kotlin
+ensure (name) {
+    isNotBlank() and (length > 2)
+}
+```
+
+You can also use ```fail``` in combination with
+```if```,```when``` or the elvis operator as more flexible alternatives.
+
+>```ensure``` is written in the same coding style as ```if``` - statements are, because the usage is conceptually quite the same.
+
+### The Snowflake
+
+In situations where you don't want to define a new property for a
+delegation unwrapping, you can use the *Snowflake* - method instead.
+Simply wrap the expression to validate.
+
+```kotlin
+import com.github.merlinths.kava.validator.*
+import java.util.Optional
+
+fun main() = onlyValidate {
+    val processedMagic = process(getNumber().`*`)
+
+    println("Processed magic number is $processedMagic")
+}
+
+fun process(number: Int) =
+    number * 10 + 5
+
+fun getNumber() =
+    Optional.of(42)
+```
 
 ### Example
 
@@ -29,12 +127,19 @@ import java.util.Optional
 fun main() {
     val name = parseName("Hello Kotlin!")
 
-    name.ifPresent(::println)
+    name.ifPresentOrElse(
+        action = { name ->
+            println("Bye $name!")
+        },
+        emptyAction = {
+            println("Unable to parse a name!")
+        }
+    )
 }
 
 fun parseName(greeting: String): Optional<String> {
     if (greeting.isBlank() or !greeting.endsWith("!")) {
-        return Optional.empty();
+        return Optional.empty()
     }
 
     val name = "Hello\\s([^!]*)!"
@@ -49,15 +154,16 @@ fun parseName(greeting: String): Optional<String> {
 ```
 
 Using Kava
+
 ```kotlin
-import com.github.merlinths.kava.ensure
-import com.github.merlinths.kava.validation.valid
-import com.github.merlinths.kava.validator.optional
+fun main() {
+    validate {
+        val name by parseName("Hello Kotlin!")
 
-fun main() = valid {
-    val (name) = parseName("Hello Kotlin!")
-
-    println(name)
+        println("Bye $name!")
+    } onFailure {
+        println("Unable to parse a name!")
+    }
 }
 
 fun parseName(greeting: String) = optional {
@@ -65,7 +171,7 @@ fun parseName(greeting: String) = optional {
         isNotBlank() and endsWith("!")
     }
 
-    val (name) = "Hello\\s([^!]*)!"
+    val name by "Hello\\s([^!]*)!"
         .toRegex()
         .find(greeting)
 
@@ -73,32 +179,22 @@ fun parseName(greeting: String) = optional {
 }
 ```
 
-Instead of writing it in the destructuring syntax, you can also use ```ensure (condition)```.
-This function uses kotlin contracts to enable the same IDE awareness.
+### Custom Datatypes
 
-*Note that ```ensure``` is written in the same coding style as if - statements are, because the usage is conceptionally quite the same.*
-
-```kotlin
-val name = "Hello\\s([^!]*)!"
-        .toRegex()
-        .find(greeting)
-
-ensure (name != null)
-name.groupValues[1]
-```
-
-### Support Custom Datatypes
-
-To automatically handle custom datatypes:
+To automatically handle custom data types in ```ValidationScope```
 - Create custom ```Validator``` implementation
 - Register implementation using ```@Validator```
+
+```kotlin
+
+```
 
 
 ## Installation
 
 ### Gradle
 
-In your root build.gradle file
+In your root *build.gradle*
 
 ```gradle
 allprojects {
@@ -107,10 +203,10 @@ allprojects {
   }
 }
 ```
-Add dependency to your module build.gradle file
+Add dependency to your module *build.gradle*
 
 ```gradle
-implementation 'com.github.MerlinTHS:Kava:1.0.1'
+implementation 'com.github.MerlinTHS:Kava:1.0.2'
 ```
 
 ## Supported platforms

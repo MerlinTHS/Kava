@@ -1,12 +1,12 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("multiplatform") version "1.7.21"
     `maven-publish`
 }
 
 group = "com.github.merlinths"
-version = "1.0.1"
-
-val coroutineVersion = "1.6.4"
+version = "1.0.3"
 
 repositories {
     mavenCentral()
@@ -15,7 +15,10 @@ repositories {
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
+            kotlinOptions.apply {
+                jvmTarget = "1.8"
+                freeCompilerArgs = listOf("-Xcontext-receivers")
+            }
         }
         withJava()
         testRuns["test"].executionTask.configure {
@@ -24,11 +27,7 @@ kotlin {
     }
     
     sourceSets {
-        val jvmMain by getting {
-            dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
-            }
-        }
+        val jvmMain by getting
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test"))

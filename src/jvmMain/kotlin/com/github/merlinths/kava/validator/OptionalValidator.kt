@@ -1,17 +1,53 @@
 package com.github.merlinths.kava.validator
 
-import com.github.merlinths.kava.ValidScope
-import com.github.merlinths.kava.validation.validate
+import com.github.merlinths.kava.scope.ValidationScope
+import com.github.merlinths.kava.scope.validate
 import java.util.Optional
+import kotlin.jvm.optionals.getOrElse
+import kotlin.reflect.KProperty
 
+@OptIn(ExperimentalStdlibApi::class)
 class OptionalValidator<Type : Any> : Validator<Type, Optional<Type>> {
-    override val invalid = Optional.empty<Type>()
+    override val invalid =
+        Optional.empty<Type>()
 
     override fun valid(value: Type) =
         Optional.of(value)
+
+    override fun ValidationScope<*>.validate(wrapper: Optional<Type>) =
+        wrapper.getOrElse(::fail)
 }
 
 fun <Type: Any> optional(
-    block: ValidScope<Type>.() -> Type
-) = OptionalValidator<Type>()
-    .validate(block)
+    block: ValidationScope<Type>.() -> Type
+) = validate(OptionalValidator(), block)
+
+context (ValidationScope<*>)
+val <Type: Any> Optional<Type>.`*`: Type
+    get() = with(this@ValidationScope) {
+        OptionalValidator<Type>().run {
+            this@ValidationScope.validate(this@`*`)
+        }
+    }
+
+context (ValidationScope<*>)
+val <Type: Any> (() -> Optional<Type>).`*`: Type
+    get() = with(this@ValidationScope) {
+        this@`*`().`*`
+    }
+
+context (ValidationScope<*>)
+operator fun <Type: Any> Optional<Type>.getValue(
+    thisRef: Any?,
+    property: KProperty<*>
+): Type = with(this@ValidationScope) {
+    this@getValue.`*`
+}
+
+context (ValidationScope<*>)
+operator fun <Type : Any> (() -> Optional<Type>).getValue(
+    thisRef: Any?,
+    property: KProperty<*>
+): Type = with(this@ValidationScope) {
+    this@getValue.`*`
+}
