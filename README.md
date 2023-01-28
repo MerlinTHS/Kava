@@ -95,7 +95,7 @@ You can also use ```fail``` in combination with
 >```ensure``` is written in the same coding style as ```if``` - statements are, because the usage is conceptually quite the same.
 Statements below it will only be executed, if the condition is ```true```.
 
-### The Snowflake
+### The Snowflake ❄
 
 In situations where you don't want to define a new property for checking and unwrapping via delegation,
 you can use the *Snowflake* - property instead.
