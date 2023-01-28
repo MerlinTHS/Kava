@@ -198,7 +198,7 @@ allprojects {
 Add dependency to your module *build.gradle*
 
 ```gradle
-implementation 'com.github.MerlinTHS:Kava:1.0.3'
+implementation 'com.github.MerlinTHS:Kava:1.0.2'
 ```
 
 ## Supported platforms
