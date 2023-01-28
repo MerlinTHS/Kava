@@ -50,7 +50,7 @@ data class Person(
     val age: Int
 )
 
-fun main() = validate {
+fun main() = onlyValidate {
     val person by getPerson()
     
     println("${person.name} is ${person.age} years old!")
