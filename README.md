@@ -9,8 +9,8 @@ Kava comes with a few top-level functions for creating optional data types
 - ```nullable``` for nullable types
 - ```optional``` for types wrapped into ```java.util.Optional```
 
-There's also a ```validate``` function which returns an ```ValidationResult```.
-This result can be used to call the extension functions ```onSuccess``` or```onFailure```.
+As well as a ```validate``` function which returns an ```ValidationResult```. It can be used to execute code in case the scope succeeds
+or fails with the extension functions ```onSuccess``` or```onFailure```. If you aren't interessted in checking the result, use ```onlyValidate```.
 
 ```kotlin
 import com.github.merlinths.kava.validator.*
@@ -63,8 +63,7 @@ fun getPerson() = Optional.of(
 
 ### Preconditions
 
-Use ```ensure``` to check conditions. It uses *Kotlin Contracts* to gain better
-IDE assistance.
+Use ```ensure``` to check conditions. It's internal use of *Kotlin Contracts* makes IntelliJ aware of your contract and results in a better IDE assistance.
 
 Given a nullable property ```1```.
 Instead of declaring a new property, that's delegated by validation ```2```.
@@ -81,7 +80,7 @@ val name by maybeName
 ensure (maybeName != null)
 ```
 
-Or use the trailing lambda syntax to combine multiple condition of the
+Or use the trailing lambda syntax to combine multiple conditions for the
 same receiver.
 
 ```kotlin
@@ -91,15 +90,16 @@ ensure (name) {
 ```
 
 You can also use ```fail``` in combination with
-```if```,```when``` or the elvis operator as more flexible alternatives.
+```if```, ```when``` or the *Elvis Operator* ```?:``` as more flexible alternatives.
 
 >```ensure``` is written in the same coding style as ```if``` - statements are, because the usage is conceptually quite the same.
+Statements below it will only be executed, if the condition is ```true```.
 
 ### The Snowflake
 
-In situations where you don't want to define a new property for a
-delegation unwrapping, you can use the *Snowflake* - method instead.
-Simply wrap the expression to validate.
+In situations where you don't want to define a new property for checking and unwrapping via delegation,
+you can use the *Snowflake* - property instead.
+Simply add a snowflake to the expression to validate.
 
 ```kotlin
 import com.github.merlinths.kava.validator.*
@@ -156,6 +156,9 @@ fun parseName(greeting: String): Optional<String> {
 Using Kava
 
 ```kotlin
+import com.github.merlinths.kava.validator.*
+import java.util.Optional
+
 fun main() {
     validate {
         val name by parseName("Hello Kotlin!")
@@ -179,17 +182,6 @@ fun parseName(greeting: String) = optional {
 }
 ```
 
-### Custom Datatypes
-
-To automatically handle custom data types in ```ValidationScope```
-- Create custom ```Validator``` implementation
-- Register implementation using ```@Validator```
-
-```kotlin
-
-```
-
-
 ## Installation
 
 ### Gradle
@@ -206,7 +198,7 @@ allprojects {
 Add dependency to your module *build.gradle*
 
 ```gradle
-implementation 'com.github.MerlinTHS:Kava:1.0.2'
+implementation 'com.github.MerlinTHS:Kava:1.0.3'
 ```
 
 ## Supported platforms
