@@ -1,4 +1,4 @@
-# Kava
+# Kava ☕
 
 Kava is a kotlin library to reduce boilderplate code in the scope of validations.
 It provides a flat and easy-to-read DSL for working with optional types.
