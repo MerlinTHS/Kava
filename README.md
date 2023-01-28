@@ -203,3 +203,7 @@ implementation 'com.github.MerlinTHS:Kava:1.0.2'
 
 ## Supported platforms
 - JVM
+
+## TODOs
+- Replace exceptional-escaping with compiler-plugin modifications.
+- Add Annotation Processor to generate scope function, snowflake extension and validated delegation from custom ```Validator``` implementation.
