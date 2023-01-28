@@ -15,7 +15,7 @@ or fails with the extension functions ```onSuccess``` or```onFailure```. If you 
 ```kotlin
 import com.github.merlinths.kava.validator.*
 
-fun getName(): String? = "Kava"
+fun getName() = nullable { "Kava" }
 
 fun main() {
     validate {
@@ -56,9 +56,9 @@ fun main() = onlyValidate {
     println("${person.name} is ${person.age} years old!")
 }
 
-fun getPerson() = Optional.of(
+fun getPerson() = optional {
     Person(name = "Peter", age = 42)
-)
+}
 ```
 
 ### Preconditions
