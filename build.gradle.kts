@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.github.merlinths"
-version = "1.0.3"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
