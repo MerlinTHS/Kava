@@ -1,6 +1,6 @@
 package com.github.merlinths.kava
 
-import com.github.merlinths.kava.scope.ValidationScope
+import com.github.merlinths.kava.ValidationScope
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 

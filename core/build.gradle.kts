@@ -1,15 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("multiplatform") version "1.7.21"
+    kotlin("multiplatform")
+    id("com.google.devtools.ksp")
     `maven-publish`
-}
-
-group = "com.github.merlinths"
-version = "1.0.2"
-
-repositories {
-    mavenCentral()
 }
 
 kotlin {
@@ -27,7 +21,12 @@ kotlin {
     }
     
     sourceSets {
-        val jvmMain by getting
+        val jvmMain by getting {
+            dependencies {
+                implementation(project(":common"))
+                implementation(project(":annotations"))
+            }
+        }
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -36,11 +35,16 @@ kotlin {
     }
 }
 
+dependencies {
+    add("kspJvm", project(":processor"))
+    add("kspJvmTest", project(":processor"))
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = project.group.toString()
-            artifactId = "Kava"
+            artifactId = "Core"
             version = project.version.toString()
 
             from(components["java"])

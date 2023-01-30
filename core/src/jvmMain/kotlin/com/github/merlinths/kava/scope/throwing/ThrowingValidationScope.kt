@@ -1,7 +1,7 @@
 package com.github.merlinths.kava.scope.throwing
 
-import com.github.merlinths.kava.scope.ValidationScope
-import com.github.merlinths.kava.validator.Validator
+import com.github.merlinths.kava.ValidationScope
+import com.github.merlinths.kava.Validator
 
 /**
  * A validation scope that skips remaining code by throwing a [ValidationException].

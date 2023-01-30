@@ -1,6 +1,4 @@
-package com.github.merlinths.kava.scope
-
-import com.github.merlinths.kava.validator.Validator
+package com.github.merlinths.kava
 
 /**
  * Provides a scope to deal with validation logic.
@@ -27,11 +25,3 @@ interface ValidationScope<ScopeType> {
         block: ValidationScope<ScopeType>.() -> ScopeType
     ): WrapperType
 }
-
-
-fun <Type, WrapperType> validate(
-    validator: Validator<Type, WrapperType>,
-    block: ValidationScope<Type>.() -> Type
-) = ValidationScopeFactory
-    .createScope<Type>()
-    .host(validator, block)

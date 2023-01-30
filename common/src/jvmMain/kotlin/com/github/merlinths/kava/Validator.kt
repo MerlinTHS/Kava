@@ -1,6 +1,4 @@
-package com.github.merlinths.kava.validator
-
-import com.github.merlinths.kava.scope.ValidationScope
+package com.github.merlinths.kava
 
 interface Validator<Type, WrapperType> {
     val invalid: WrapperType
