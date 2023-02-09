@@ -1,4 +1,4 @@
-package com.github.merlinths.kava
+package io.mths.kava
 
 interface Validator<Type, WrapperType> {
     val invalid: WrapperType

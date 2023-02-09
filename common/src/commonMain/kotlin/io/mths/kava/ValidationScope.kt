@@ -1,4 +1,4 @@
-package com.github.merlinths.kava
+package io.mths.kava
 
 /**
  * Provides a scope to deal with validation logic.
@@ -9,12 +9,10 @@ interface ValidationScope<ScopeType> {
     /**
      * This method stops execution of the current [ValidationScope].
      *
-     * The Scope returns an invalid result ( like null or an empty [Optional] ).
+     * The Scope returns an invalid result ( like null or an empty [java.util.Optional] ).
      *
-     * @return The return type only exists to make the compiler happy. The
-     * execution is stopped before anything gets returned.
-     */
-    fun <Type> fail(): Type
+     * */
+    fun fail(): Nothing
 
     /**
      * Runs [block] in the current scope and uses validator
