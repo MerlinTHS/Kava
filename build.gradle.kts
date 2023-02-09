@@ -7,8 +7,4 @@ plugins {
 allprojects {
     group = "io.github.merlinths"
     version = "1.0.0"
-
-    repositories {
-        mavenCentral()
-    }
 }
