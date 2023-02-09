@@ -1,7 +1,7 @@
 package io.mths.kava.assertions
 
 import io.mths.kava.ValidationScope
-import io.mths.kava.validator.ValidationResult
+import io.mths.kava.result.ValidationResult
 import io.mths.kava.validator.validate
 import kotlin.test.assertEquals
 

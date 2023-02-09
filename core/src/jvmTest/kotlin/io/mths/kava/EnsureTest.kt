@@ -1,6 +1,6 @@
 package io.mths.kava
 
-import io.mths.kava.validator.onSuccess
+import io.mths.kava.result.onSuccess
 import io.mths.kava.validator.validate
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail

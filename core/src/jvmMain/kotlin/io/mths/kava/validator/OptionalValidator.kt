@@ -8,7 +8,6 @@ import kotlin.jvm.optionals.getOrElse
 import kotlin.reflect.KProperty
 
 @OptIn(ExperimentalStdlibApi::class)
-
 class OptionalValidator<Type : Any> : Validator<Type, Optional<Type>> {
     override val invalid =
         Optional.empty<Type>()

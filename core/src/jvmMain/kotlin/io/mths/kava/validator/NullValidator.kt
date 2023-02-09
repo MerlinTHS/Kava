@@ -1,12 +1,10 @@
 package io.mths.kava.validator
 
-import io.mths.kava.KavaValidator
 import io.mths.kava.ValidationScope
 import io.mths.kava.Validator
 import io.mths.kava.scope.validate
 import kotlin.reflect.KProperty
 
-@KavaValidator(name = "nullable")
 class NullValidator<Type> : Validator<Type, Type?> {
     override val invalid = null
 
