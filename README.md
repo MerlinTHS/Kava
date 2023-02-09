@@ -13,7 +13,7 @@ As well as a ```validate``` function which returns an ```ValidationResult```. It
 or fails with the extension functions ```onSuccess``` or```onFailure```. If you aren't interessted in checking the result, use ```onlyValidate```.
 
 ```kotlin
-import com.github.merlinths.kava.validator.*
+import com.github.merlinths.io.validator.*
 
 fun getName() = nullable { "Kava" }
 
@@ -42,7 +42,7 @@ So be careful when catching exceptions inside a ```ValidationScope```.
 ### Validation by Delegation
 
 ```kotlin
-import com.github.merlinths.kava.validator.*
+import com.github.merlinths.io.validator.*
 import java.util.Optional
 
 data class Person(
@@ -102,7 +102,7 @@ you can use the *Snowflake* - property instead.
 Simply add a snowflake to the expression to validate.
 
 ```kotlin
-import com.github.merlinths.kava.validator.*
+import com.github.merlinths.io.validator.*
 import java.util.Optional
 
 fun main() = onlyValidate {
@@ -156,7 +156,7 @@ fun parseName(greeting: String): Optional<String> {
 Using Kava
 
 ```kotlin
-import com.github.merlinths.kava.validator.*
+import com.github.merlinths.io.validator.*
 import java.util.Optional
 
 fun main() {
