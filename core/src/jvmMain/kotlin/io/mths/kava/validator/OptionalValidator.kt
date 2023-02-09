@@ -1,5 +1,6 @@
 package io.mths.kava.validator
 
+import io.mths.kava.GenerateExtensions
 import io.mths.kava.ValidationScope
 import io.mths.kava.Validator
 import io.mths.kava.scope.validate
@@ -8,6 +9,7 @@ import kotlin.jvm.optionals.getOrElse
 import kotlin.reflect.KProperty
 
 @OptIn(ExperimentalStdlibApi::class)
+@GenerateExtensions("optional")
 class OptionalValidator<Type : Any> : Validator<Type, Optional<Type>> {
     override val invalid =
         Optional.empty<Type>()
@@ -18,10 +20,6 @@ class OptionalValidator<Type : Any> : Validator<Type, Optional<Type>> {
     override fun ValidationScope<*>.validate(wrapper: Optional<Type>) =
         wrapper.getOrElse(::fail)
 }
-
-fun <Type: Any> optional(
-    block: ValidationScope<Type>.() -> Type
-) = validate(OptionalValidator(), block)
 
 context (ValidationScope<*>)
 val <Type: Any> Optional<Type>.`*`: Type

@@ -1,10 +1,12 @@
 package io.mths.kava.validator
 
+import io.mths.kava.GenerateExtensions
 import io.mths.kava.ValidationScope
 import io.mths.kava.Validator
 import io.mths.kava.scope.validate
 import kotlin.reflect.KProperty
 
+@GenerateExtensions("nullable")
 class NullValidator<Type> : Validator<Type, Type?> {
     override val invalid = null
 
@@ -13,10 +15,6 @@ class NullValidator<Type> : Validator<Type, Type?> {
     override fun ValidationScope<*>.validate(wrapper: Type?) =
         wrapper ?: fail()
 }
-
-fun <Type> nullable(
-    block: ValidationScope<Type>.() -> Type
-) = validate(NullValidator(), block)
 
 context (ValidationScope<*>)
 operator fun <Type> Type?.getValue(

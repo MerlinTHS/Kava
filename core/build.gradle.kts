@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    id("com.google.devtools.ksp")
     id("com.vanniktech.maven.publish") version "0.24.0"
     `maven-publish`
 }
@@ -39,7 +40,7 @@ kotlin {
                 implementation(kotlin("test"))
 
                 implementation(project(":annotations"))
-                api(project(":common"))
+                implementation(project(":common"))
 
                 // When published to MavenCentral
                 //implementation("io.github.merlinths:kava-annotations:1.0.2")
@@ -47,6 +48,15 @@ kotlin {
             }
         }
     }
+}
+
+ksp {
+    arg("Kava.SeparateFiles", "true")
+}
+
+dependencies {
+    add("kspJvm", project(":processor"))
+    add("kspJvmTest", project(":processor"))
 }
 
 mavenPublishing {

@@ -1,10 +1,12 @@
 package io.mths.kava.validator
 
+import io.mths.kava.GenerateExtensions
 import io.mths.kava.ValidationScope
 import io.mths.kava.Validator
 import io.mths.kava.result.ValidationResult
 import io.mths.kava.scope.validate
 
+@GenerateExtensions("validate")
 class ResultValidator : Validator<Unit, ValidationResult> {
     override val invalid =
         ValidationResult.Failure
@@ -16,8 +18,3 @@ class ResultValidator : Validator<Unit, ValidationResult> {
         wrapper: ValidationResult
     ) = Unit
 }
-
-fun validate(
-    block: ValidationScope<*>.() -> Unit
-): ValidationResult =
-    validate(ResultValidator(), block)
