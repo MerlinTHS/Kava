@@ -1,6 +1,5 @@
-package com.github.merlinths.kava
+package io.mths.kava
 
-import com.github.merlinths.kava.ValidationScope
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
@@ -12,7 +11,7 @@ fun ValidationScope<*>.ensure(
         returns() implies condition
     }
     if (!condition) {
-        fail<Unit>()
+        fail()
     }
 }
 

@@ -1,31 +1,9 @@
-package com.github.merlinths.kava.validator
+package io.mths.kava.validator
 
-import com.github.merlinths.kava.annotations.Kava
-import com.github.merlinths.kava.ValidationScope
-import com.github.merlinths.kava.Validator
+import io.mths.kava.ValidationScope
+import io.mths.kava.Validator
+import io.mths.kava.scope.validate
 
-open class MyBaseValidator : Validator<Unit, Unit> {
-    override val invalid: Unit
-        get() = TODO("Not yet implemented")
-
-    override fun valid(value: Unit) {
-        TODO("Not yet implemented")
-    }
-
-    override fun ValidationScope<*>.validate(wrapper: Unit) {
-
-    }
-}
-
-@Kava("noRight")
-class NotRight : MyBaseValidator() {
-
-}
-
-/*
-    TODO: Create real unit validator and result Validator
- */
-@Kava("validate")
 class UnitValidator : Validator<Unit, ValidationResult> {
     override val invalid = ValidationResult.Failure
 
@@ -68,4 +46,4 @@ fun onlyValidate(
 fun validate(
     block: ValidationScope<*>.() -> Unit
 ): ValidationResult =
-    com.github.merlinths.kava.scope.validate(UnitValidator(), block)
+    validate(UnitValidator(), block)

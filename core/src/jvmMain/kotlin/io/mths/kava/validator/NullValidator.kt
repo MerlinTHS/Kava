@@ -1,12 +1,12 @@
-package com.github.merlinths.kava.validator
+package io.mths.kava.validator
 
-import com.github.merlinths.kava.annotations.Kava
-import com.github.merlinths.kava.ValidationScope
-import com.github.merlinths.kava.Validator
-import com.github.merlinths.kava.scope.validate
+import io.mths.kava.KavaValidator
+import io.mths.kava.ValidationScope
+import io.mths.kava.Validator
+import io.mths.kava.scope.validate
 import kotlin.reflect.KProperty
 
-@Kava(name = "nullable")
+@KavaValidator(name = "nullable")
 class NullValidator<Type> : Validator<Type, Type?> {
     override val invalid = null
 
@@ -35,6 +35,7 @@ operator fun <Type> (() -> Type?).getValue(
 ): Type = with(this@ValidationScope) {
     this@getValue.`*`
 }
+
 context (ValidationScope<*>)
 val <Type> Type?.`*`: Type
     get() = with(this@ValidationScope) {

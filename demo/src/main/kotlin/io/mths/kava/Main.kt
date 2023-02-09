@@ -1,9 +1,11 @@
-package com.github.merlinths.kava.examples
+package io.mths.kava
 
-import com.github.merlinths.kava.ensure
-import com.github.merlinths.kava.validator.getValue
-import com.github.merlinths.kava.validator.onFailure
-import com.github.merlinths.kava.validator.validate
+import io.mths.kava.result.nested
+import io.mths.kava.result.result
+import io.mths.kava.validator.nullable
+import io.mths.kava.validator.onFailure
+import io.mths.kava.validator.validate
+import java.util.*
 
 /*
     Instead of using Prefix ( function ) notation `*`{ ... }
@@ -16,6 +18,22 @@ import com.github.merlinths.kava.validator.validate
 fun main() {
     validate {
         //val name: String by parseName("Hello Kotlin!")
+        /*val result = nested<Int> {
+            println("Before fail")
+            fail()
+            println("After fail")
+            Optional.of("Hello Kotlin!")
+        }*/
+        val result = result { // IntelliJ should warn you!
+            fail()
+            "Hello Kava!"
+        }
+
+        nullable {
+            "Hello Kava!"
+        }
+
+        println("Result is $result")
 
         println("Ok")
         //println("Bye $name!")
@@ -23,9 +41,9 @@ fun main() {
         println("Unable to parse a name!")
     }
 }
-
+/*
 fun parseName(greeting: String) = result {
-    ensure (greeting) {
+    ensure(greeting) {
         isNotBlank() and endsWith("!")
     }
 
@@ -34,7 +52,7 @@ fun parseName(greeting: String) = result {
         .find(greeting)
 
     name.groupValues[1]
-}
+}*/
 /*
 fun getName(): String? {
     return "Kava"

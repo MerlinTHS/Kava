@@ -1,10 +1,10 @@
-package com.github.merlinths.kava
+package io.mths.kava
 
-import com.github.merlinths.kava.assertions.assertFailure
-import com.github.merlinths.kava.assertions.assertSuccess
-import com.github.merlinths.kava.validator.`*`
-import com.github.merlinths.kava.validator.getValue
-import com.github.merlinths.kava.validator.nullable
+import io.mths.kava.assertions.assertFailure
+import io.mths.kava.assertions.assertSuccess
+import io.mths.kava.validator.`*`
+import io.mths.kava.validator.getValue
+import io.mths.kava.validator.nullable
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

@@ -1,11 +1,9 @@
-package com.github.merlinths.kava.examples
+package io.mths.kava.result
 
-import com.github.merlinths.kava.annotations.Kava
-import com.github.merlinths.kava.scope.ValidationScope
-import com.github.merlinths.kava.scope.validate
-import com.github.merlinths.kava.validator.Validator
+import io.mths.kava.ValidationScope
+import io.mths.kava.Validator
+import io.mths.kava.scope.validate
 import kotlin.reflect.KProperty
-
 
 // Manually written
 sealed interface Result<Type> {
@@ -13,22 +11,8 @@ sealed interface Result<Type> {
     data class Success<Type>(val value: Type) : Result<Type>
 }
 
-@Kava(name = "result")
-class ResultValidator<Type> : Validator<Type, Result<Type>> {
-    override val invalid =
-        Result.Failure<Type>()
-
-    override fun valid(value: Type) =
-        Result.Success(value)
-
-    override fun ValidationScope<*>.validate(wrapper: Result<Type>) =
-        when (wrapper) {
-            is Result.Success -> wrapper.value
-            is Result.Failure -> fail()
-        }
-}
-
 // KSP generated
+/*
 fun <Type> result(
     block: ValidationScope<Type>.() -> Type
 ) = validate(ResultValidator(), block)
@@ -50,7 +34,7 @@ val <Type> Result<Type>.`*`: Type
     }
 
 
-
+*/
 
 // TODO: Create "snow" shortcut
 /*
@@ -60,7 +44,7 @@ fun main2() = valid {
         val myResponse by receiveResponse()
         processResponse(myResponse)
 
-        Result.Failure<String>()
+        io.mths.kava.result.Result.Failure<String>()
     }
 
     val somethingElse = `*` { produceSomething() }

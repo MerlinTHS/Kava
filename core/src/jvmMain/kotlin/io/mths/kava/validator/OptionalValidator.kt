@@ -1,15 +1,14 @@
-package com.github.merlinths.kava.validator
+package io.mths.kava.validator
 
-import com.github.merlinths.kava.annotations.Kava
-import com.github.merlinths.kava.ValidationScope
-import com.github.merlinths.kava.Validator
-import com.github.merlinths.kava.scope.validate
+import io.mths.kava.ValidationScope
+import io.mths.kava.Validator
+import io.mths.kava.scope.validate
 import java.util.Optional
 import kotlin.jvm.optionals.getOrElse
 import kotlin.reflect.KProperty
 
 @OptIn(ExperimentalStdlibApi::class)
-@Kava(name = "optional")
+
 class OptionalValidator<Type : Any> : Validator<Type, Optional<Type>> {
     override val invalid =
         Optional.empty<Type>()

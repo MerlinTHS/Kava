@@ -1,7 +1,7 @@
-package com.github.merlinths.kava.scope.throwing
+package io.mths.kava.scope.throwing
 
-import com.github.merlinths.kava.ValidationScope
-import com.github.merlinths.kava.Validator
+import io.mths.kava.ValidationScope
+import io.mths.kava.Validator
 
 /**
  * A validation scope that skips remaining code by throwing a [ValidationException].
@@ -9,7 +9,7 @@ import com.github.merlinths.kava.Validator
  *  Note: **Be careful when catching exceptions too generally!**
  */
 class ThrowingValidationScope<ScopeType> : ValidationScope<ScopeType> {
-    override fun <Type> fail() =
+    override fun fail() =
         throw ValidationException
 
     override fun <WrapperType> host(

@@ -1,7 +1,7 @@
-package com.github.merlinths.kava
+package io.mths.kava
 
-import com.github.merlinths.kava.validator.onSuccess
-import com.github.merlinths.kava.validator.validate
+import io.mths.kava.validator.onSuccess
+import io.mths.kava.validator.validate
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 
