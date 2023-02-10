@@ -3,6 +3,54 @@
 Kava is a kotlin library to reduce boilderplate code in the scope of validations.
 It provides a flat and easy-to-read DSL for working with optional types.
 
+## Installation
+
+Make sure Maven Central is set as a repository for your project.
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+```
+
+Add the core dependency. Refer to [MavenRepository](https://mvnrepository.com/search?q=io.github.merlinths) for the latest versions.
+
+```kotlin
+dependencies {
+    implementation("io.github.merlinths:kava-core:1.0.0")   
+}
+```
+
+Kava uses [Context Receivers](https://github.com/Kotlin/KEEP/blob/master/proposals/context-receivers.md),
+a feature introduced in [Kotlin 1.6.20](https://kotlinlang.org/docs/whatsnew1620.html),
+which is currently JVM-only. Since it's still experimental your
+have to add ```-Xcontext-receivers``` to the additional compiler
+arguments. There are also templates to getting started a bit easier. They also come with the preconfigured annotation processor for [custom types](#custom-types).
+
+For single-platform (JVM) project. See [Single-Platform Template]()
+
+```kotlin
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xcontext-receivers")
+    }
+}
+```
+
+For a multi-platform project. [Multi-Platform Template]()
+
+```kotlin
+kotlin {
+    jvm {
+        compilations.all {
+            kotlinOptions {
+                freeCompilerArgs = listOf("-Xcontext-receivers")
+            }
+        }
+    }
+}
+```
+
 ## Getting started
 
 Kava comes with a few top-level functions for creating optional data types
@@ -10,7 +58,7 @@ Kava comes with a few top-level functions for creating optional data types
 - ```optional``` for types wrapped into ```java.util.Optional```
 
 As well as a ```validate``` function which returns an ```ValidationResult```. It can be used to execute code in case the scope succeeds
-or fails with the extension functions ```onSuccess``` or```onFailure```. If you aren't interessted in checking the result, use ```onlyValidate```.
+or fails with the extension functions ```onSuccess``` or```onFailure```. If you aren't interested in checking the result, use ```kava```.
 
 ```kotlin
 import com.github.merlinths.io.validator.*
@@ -50,7 +98,7 @@ data class Person(
     val age: Int
 )
 
-fun main() = onlyValidate {
+fun main() = kava {
     val person by getPerson()
     
     println("${person.name} is ${person.age} years old!")
@@ -105,7 +153,7 @@ Simply add a snowflake to the expression to validate.
 import com.github.merlinths.io.validator.*
 import java.util.Optional
 
-fun main() = onlyValidate {
+fun main() = kava {
     val processedMagic = process(getNumber().`*`)
 
     println("Processed magic number is $processedMagic")
@@ -182,28 +230,38 @@ fun parseName(greeting: String) = optional {
 }
 ```
 
-## Installation
+## Custom Types
 
-### Gradle
+You can add your own scope functions and the corresponding extension function for valid delegation by adding
+the ```@GenerateExtensions``` annotation to your custom validator. The validator has to extend kava's ```Validator``` class.
+Otherwise, compilation will fail!
 
-In your root *build.gradle*
+```kotlin
 
-```gradle
-allprojects {
-  repositories {
-    maven { url 'https://jitpack.io' }
-  }
+```
+
+To use the annotation and the corresponding processor to generate extensions, apply the KSP - Plugin, include the annotation - dependency.
+
+```kotlin
+plugins {
+    id("com.google.devtools.ksp") version "1.8.0-1.0.8"
 }
 ```
-Add dependency to your module *build.gradle*
 
-```gradle
-implementation 'com.github.MerlinTHS:Kava:1.0.2'
+Also don't forget to add the generated directory to your 
+source sets.
+
+```kotlin
+kotlin {
+    sourceSets {
+        main {
+            kotlin.srcDir("")
+        }
+    }
+}
 ```
+
+
 
 ## Supported platforms
 - JVM
-
-## TODOs
-- Replace exceptional-escaping with compiler-plugin modifications.
-- Add Annotation Processor to generate scope function, snowflake extension and validated delegation from custom ```Validator``` implementation.
