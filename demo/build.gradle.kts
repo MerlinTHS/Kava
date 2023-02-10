@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -19,11 +18,11 @@ kotlin {
 }
 
 dependencies {
-    add("ksp", project(":processor"))
-    add("kspTest", project(":processor"))
+    add("ksp", "io.github.merlinths:kava-processor:1.0.0")
+    add("kspTest", "io.github.merlinths:kava-processor:1.0.0")
 
-    implementation(project(":core"))
-    implementation(project(":annotations"))
+    implementation("io.github.merlinths:kava-core:1.0.0")
+    implementation("io.github.merlinths:kava-annotations:1.0.3")
 }
 
 tasks.withType(KotlinCompile::class) {
