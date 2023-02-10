@@ -274,8 +274,8 @@ class ResultValidator<Type> : Validator<Type, Result<Type>> {
 
 To use the annotation and the corresponding processor to generate
 extensions
-- apply the [KSP Compiler - Plugin](https://kotlinlang.org/docs/ksp-overview.html)
-- include the _annotations_ - dependency.
+- Apply the [KSP Compiler - Plugin](https://kotlinlang.org/docs/ksp-overview.html)
+- Include the _annotations_ - dependency.
 - Add the generated directory to your source sets.
 
 For the sake of simplicity the following code samples show only
