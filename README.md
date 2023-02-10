@@ -27,7 +27,7 @@ which is currently JVM-only. Since it's still experimental you
 have to add ```-Xcontext-receivers``` as an additional compiler
 argument.
 
-For single-platform (JVM) project.
+For single-platform (JVM) projects.
 
 ```kotlin
 tasks.withType<KotlinCompile> {
@@ -37,7 +37,7 @@ tasks.withType<KotlinCompile> {
 }
 ```
 
-For a multi-platform project.
+For a multi-platform projects.
 
 ```kotlin
 kotlin {
@@ -51,27 +51,23 @@ kotlin {
 }
 ```
 
-There are also two templates to get started a bit faster.
+There are two templates to get started a bit faster.
 One for [single-platform JVM]()
 and one for [multi-platform]() projects.
 
 ## Getting started
 
 *Kava* comes with a few top-level functions which provide
-a scope for handling optional data types
-- ```nullable``` for nullable types
-- ```optional``` for types wrapped into ```java.util.Optional```
-- ```validate``` which returns a ```ValidationResult```
-- ```kava``` which always returns ```Unit```
+a scope for validation.
+- ```nullable<Type>``` Returns ```Type``` or ```null```
+- ```optional<Type>``` Returns ```Type``` wrapped into ```java.util.Optional```
+- ```validate``` Returns a ```ValidationResult``` ( ```Success``` or ```Failure``` )
+- ```kava``` Returns always ```Unit```
 
-```validate``` and ```kava``` can be used to execute code only
-in case the scope succeeds
-or fails with the extension functions ```onSuccess``` or```onFailure```. If you aren't interested in checking the result, use ```kava```.
+```kava``` can be used to execute code only in case the preceding code succeeds, without caring about the overall result of the scope, whereas ```validate``` offers a convenient way to handle failure or success with the extension functions ```onSuccess``` or```onFailure```.
 
 ```kotlin
 import com.github.merlinths.io.validator.*
-
-fun getName() = nullable { "Kava" }
 
 fun main() {
     validate {
@@ -84,6 +80,9 @@ fun main() {
         println("Operation failed!")
     }
 }
+
+fun getName(): String? =
+    nullable { "Kava" }
 ```
 
 The code inside ```validate``` runs in the context of a ```ValidationScope```.
@@ -112,9 +111,10 @@ fun main() = kava {
     println("${person.name} is ${person.age} years old!")
 }
 
-fun getPerson() = optional {
-    Person(name = "Peter", age = 42)
-}
+fun getPerson(): Optional<Person> =
+    optional {
+        Person(name = "Peter", age = 42)
+    }
 ```
 
 ### Preconditions
@@ -174,7 +174,7 @@ fun getNumber() =
     Optional.of(42)
 ```
 
-### Example
+### Comparison
 
 Using standard kotlin
 ```kotlin
@@ -263,11 +263,12 @@ class ResultValidator<Type> : Validator<Type, Result<Type>> {
     override fun valid(value: Type) =
         Result.Success(value)
 
-    override fun ValidationScope<*>.validate(wrapper: Result<Type>) =
-        when (wrapper) {
-            is Result.Success -> wrapper.value
-            else -> fail()
-        }
+    override fun ValidationScope<*>.validate(
+        wrapper: Result<Type>
+    ) = when (wrapper) {
+        is Result.Success -> wrapper.value
+        else -> fail()
+    }
 }
 ```
 
