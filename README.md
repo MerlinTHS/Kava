@@ -151,6 +151,8 @@ You can also use ```fail``` in combination with
 >```ensure``` is written in the same coding style as ```if``` - statements are, because the usage is conceptually quite the same.
 Statements below it will only be executed, if the condition is ```true```.
 
+### Listed Preconditions
+
 To shorten precondition checks, you can replace ```ensure``` with
 a special overloaded ```unaryPlus``` operator in the context of a
 ```ValidationScope```. It looks more like listing all the
@@ -245,10 +247,8 @@ fun main() {
 }
 
 fun parseName(greeting: String) = optional {
-    ensure (greeting) {
-        isNotBlank() and endsWith("!")
-    }
-
+    + greeting { isNotBlank() and endsWith("!") }
+    
     val name by "Hello\\s([^!]*)!"
         .toRegex()
         .find(greeting)
