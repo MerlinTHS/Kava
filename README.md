@@ -151,6 +151,25 @@ You can also use ```fail``` in combination with
 >```ensure``` is written in the same coding style as ```if``` - statements are, because the usage is conceptually quite the same.
 Statements below it will only be executed, if the condition is ```true```.
 
+To shorten precondition checks, you can replace ```ensure``` with
+a special overloaded ```unaryPlus``` operator in the context of a
+```ValidationScope```. It looks more like listing all the
+preconditions, than ensuring them step by step.
+
+```kotlin
+fun save(
+    name: String,
+    description: String
+) = validate {
+    + name { isNotBlank() }
+    + description { length > 20 }
+    
+    // ...
+}
+```
+
+
+
 ### The Snowflake ❄
 
 In situations where you don't want to define a new property for checking and unwrapping via delegation,
