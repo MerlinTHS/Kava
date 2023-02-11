@@ -1,5 +1,8 @@
 package io.mths.kava
 
+import io.mths.kava.assertions.assertFailure
+import io.mths.kava.condition.ensure
+import io.mths.kava.condition.unaryPlus
 import io.mths.kava.result.onSuccess
 import io.mths.kava.validator.validate
 import org.junit.jupiter.api.Test
@@ -14,6 +17,13 @@ class EnsureTest {
             assert(false) { "Code after fail is executed!" }
         } onSuccess {
             fail { "Entered onSuccess block!" }
+        }
+    }
+
+    @Test
+    fun `Shorthand works`() {
+        assertFailure {
+            + false
         }
     }
 }

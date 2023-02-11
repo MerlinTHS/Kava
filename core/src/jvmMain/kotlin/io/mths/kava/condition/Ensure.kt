@@ -1,5 +1,6 @@
-package io.mths.kava
+package io.mths.kava.condition
 
+import io.mths.kava.ValidationScope
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
