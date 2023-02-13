@@ -3,7 +3,12 @@ package io.mths.kava.processor.generator
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSVisitorVoid
 import com.squareup.kotlinpoet.*
-import io.mths.kava.processor.generator.ksp.createScopeBuilder
+import io.mths.kava.GenerateExtensions
+import io.mths.kava.processor.generator.extensions.*
+import io.mths.kava.processor.generator.ksp.annotation.getAnnotation
+import io.mths.kava.processor.generator.extensions.info.ExtensionInfo
+import io.mths.kava.processor.generator.extensions.info.of
+import io.mths.kava.processor.generator.poet.*
 
 class KavaVisitor(
     private val file: FileSpec.Builder
@@ -11,21 +16,18 @@ class KavaVisitor(
     override fun visitClassDeclaration(
         classDeclaration: KSClassDeclaration,
         data: Unit
-    ) = with(classDeclaration) {
-        file.addFunctions(
-            createScopeBuilder(),
-/*
-            toSnowflake(),
-            toSnowflakeLambda(),
+    ) = with(ExtensionInfo.of(classDeclaration)) {
+        val annotation = classDeclaration.getAnnotation<GenerateExtensions>()
 
-            toDelegation(),
-            toDelegationLambda(), */
+        file.addProperties(
+            snowflake(),
+            snowflakeLambda()
         )
-    }
-}
 
-internal fun FileSpec.Builder.addFunctions(vararg functions: FunSpec) {
-    for (function in functions) {
-        addFunction(function)
+        file.addFunctions(
+            delegation(),
+            delegationLambda(),
+            scopeBuilder(annotation.scopeName)
+        )
     }
 }

@@ -23,7 +23,7 @@ class KavaGenerator(
     }
 
     fun generateSingleFile() {
-        val file = FileSpec.builder("io.mths.kava", "GeneratedKavaValidators" + hashCode().toString())
+        val file = FileSpec.builder("io.mths.kava.extensions", "GeneratedKavaValidators" + hashCode().toString())
 
         for (declaration in declarations) {
             declaration generateExtensionsTo file
@@ -46,7 +46,7 @@ class KavaGenerator(
 
     private fun KSClassDeclaration.createExtensionFile() =
         FileSpec.builder(
-            packageName = (packageName.asString()),
+            packageName = (packageName.asString() + ".extensions"),
             fileName = simpleName.asString() + "Extensions" + simpleName.hashCode().toString()
         )
 }
