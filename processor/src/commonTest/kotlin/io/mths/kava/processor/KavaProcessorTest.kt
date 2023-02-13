@@ -100,6 +100,7 @@ class KavaProcessorTest {
         val compilation = KotlinCompilation().apply {
             symbolProcessorProviders = listOf(KavaProcessorProvider())
             sources = listOf(source)
+            this.kotlincArguments = listOf("-Xcontext-receivers")
 
             if (separateFiles) {
                 kspArgs["Kava.SeparateFiles"] = "true"
