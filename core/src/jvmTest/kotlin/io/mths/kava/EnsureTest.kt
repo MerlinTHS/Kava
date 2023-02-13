@@ -4,7 +4,7 @@ import io.mths.kava.assertions.assertFailure
 import io.mths.kava.condition.ensure
 import io.mths.kava.condition.unaryPlus
 import io.mths.kava.result.onSuccess
-import io.mths.kava.validator.validate
+import io.mths.kava.validator.extensions.validate
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail
 

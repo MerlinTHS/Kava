@@ -2,9 +2,10 @@ package io.mths.kava
 
 import io.mths.kava.assertions.assertFailure
 import io.mths.kava.assertions.assertSuccess
-import io.mths.kava.validator.`*`
-import io.mths.kava.validator.getValue
-import io.mths.kava.validator.optional
+import io.mths.kava.condition.ensure
+import io.mths.kava.validator.extensions.`*`
+import io.mths.kava.validator.extensions.getValue
+import io.mths.kava.validator.extensions.optional
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import java.util.Optional

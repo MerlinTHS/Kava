@@ -46,8 +46,11 @@ ksp {
 }
 
 dependencies {
-    add("kspJvm", libs.kava.processor)
-    add("kspJvmTest", libs.kava.processor)
+    //add("kspJvm", libs.kava.processor)
+    //add("kspJvmTest", libs.kava.processor)
+
+    add("kspJvm", project(":processor"))
+    add("kspJvmTest", project(":processor"))
 }
 
 kavaPublishing(

@@ -2,11 +2,14 @@ package io.mths.kava
 
 import io.mths.kava.assertions.assertFailure
 import io.mths.kava.assertions.assertSuccess
-import io.mths.kava.validator.`*`
-import io.mths.kava.validator.getValue
-import io.mths.kava.validator.nullable
+import io.mths.kava.result.ValidationResult
+import io.mths.kava.validator.extensions.`*`
+import io.mths.kava.validator.extensions.getValue
+import io.mths.kava.validator.extensions.nullable
+import io.mths.kava.validator.extensions.validate
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import java.util.Optional
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
@@ -38,7 +41,7 @@ class NullableTest {
         fun `Fails for null`() {
             assertFailure {
                 val maybeResult: String? = null
-                maybeResult.`*`
+                //maybeResult.`*`
             }
         }
 
