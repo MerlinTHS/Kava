@@ -21,7 +21,7 @@ fun ExtensionInfo.snowflakeLambda(): PropertySpec {
                 .getterBuilder()
                 .addCode("""
                 return with(this@%T) {
-                    this@`*`.`*`
+                    this@`*`().`*`
                 }
             """.trimIndent(), scope
                 ).build()

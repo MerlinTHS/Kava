@@ -35,6 +35,22 @@ class SnowflakeTest {
     }
 
     @Test
+    fun `Nullable snowflake lambda extension`() {
+        val spec = nullableInfo.snowflakeLambda()
+
+        assertEqualsCode(
+            actual = spec.toString(),
+            expected = """
+                context (io.mths.kava.ValidationScope<*>)
+                val <Type> (() -> Type?).`*`: Type
+                    get() = with(this@io.mths.kava.ValidationScope) {
+                        this@`*`().`*`
+                    }
+            """
+        )
+    }
+
+    @Test
     fun `Nullable delegation extension`() {
         val spec = nullableInfo.delegation()
 
@@ -48,7 +64,25 @@ class SnowflakeTest {
                 ): Type =  with(this@io.mths.kava.ValidationScope) {
                     this@getValue.`*`
                 }
-            """.trimIndent()
+            """
+        )
+    }
+
+    @Test
+    fun `Nullable delegation lambda extension`() {
+        val spec = nullableInfo.delegationLambda()
+
+        assertEqualsCode(
+            actual = spec.toString(),
+            expected = """
+                context (io.mths.kava.ValidationScope<*>)
+                public operator fun <Type> (() -> Type?).getValue(
+                    thisRef: kotlin.Any?,
+                    `property`: kotlin.reflect.KProperty<*>
+                ): Type = with(this@io.mths.kava.ValidationScope) {
+                    this@getValue.`*`
+                }
+            """
         )
     }
 }
