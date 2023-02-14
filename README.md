@@ -1,6 +1,6 @@
 # Kava ☕
 
-![Maven Central](https://img.shields.io/maven-central/v/io.github.merlinths/kava-core?style=for-the-badge)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.merlinths/kava-core?style=for-the-badge)](https://search.maven.org/artifact/io.github.merlinths/kava-core)
 
 Reduce boilerplate code when dealing with validations and optional types!
 Kava provides a flat and easy-to-read DSL.
