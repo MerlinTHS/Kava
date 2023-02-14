@@ -1,7 +1,9 @@
 # Kava ☕
 
-Kava is a kotlin library to reduce boilerplate code when dealing with validations and optional types.
-It provides a flat and easy-to-read DSL.
+![Maven Central](https://img.shields.io/maven-central/v/io.github.merlinths/kava-core?style=for-the-badge)
+
+Reduce boilerplate code when dealing with validations and optional types!
+Kava provides a flat and easy-to-read DSL.
 
 ## Installation
 
