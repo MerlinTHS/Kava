@@ -1,7 +1,8 @@
-# Kava ☕
+<h1 align="center">Kava ☕
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.merlinths/kava-core?style=for-the-badge)](https://search.maven.org/artifact/io.github.merlinths/kava-core)
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-red.svg?style=for-the-badge)](https://www.apache.org/licenses/LICENSE-2.0)
+</h1>
 
 Reduce boilerplate code when dealing with validations and optional types!
 Kava provides a flat and easy-to-read DSL.
