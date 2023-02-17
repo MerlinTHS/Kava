@@ -30,7 +30,7 @@ a scope for validation.
 ```kava``` can be used to execute code only in case the preceding code succeeds, without caring about the overall result of the scope, whereas ```validate``` offers a convenient way to handle failure or success with the extension functions ```onSuccess``` or```onFailure```.
 
 ```kotlin
-import com.github.merlinths.io.validator.*
+import io.mths.kava.validator.extensions.*
 
 fun main() {
     validate {
