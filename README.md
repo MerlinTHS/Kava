@@ -52,7 +52,7 @@ The code inside ```validate``` runs in the context of a ```ValidationScope```.
 This scope allows you to use **delegated validations**. Each of the validations
 either returns a validated instance of its type or fails, which results
 in the end of the ```ValidationScope```. In the example above, the scope
-would have been left, if ```getName``` had returned ```null```. 
+would have been left, if ```getName``` had returned ```null```.
 <br />
 >To achieve this stop of execution, a ```ValidationException``` is thrown.
 So be careful when catching exceptions inside a ```ValidationScope```.
