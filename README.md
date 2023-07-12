@@ -22,7 +22,7 @@ plugins {
 ```
 
 *Kava* comes with a few top-level functions which provide
-a scope for validation.
+a scope for validation. Inside this scope you are able to deal with optional as if they were normal types.
 - ```nullable<Type>``` Returns ```Type``` or ```null```
 - ```optional<Type>``` Returns ```Type``` wrapped into ```java.util.Optional```
 - ```validate``` Returns a ```ValidationResult``` ( ```Success``` or ```Failure``` )
@@ -45,8 +45,7 @@ fun main() {
     }
 }
 
-fun getName() =
-    nullable { "Kava" }
+fun getName(): String? = "Kava"
 ```
 
 The code inside ```validate``` runs in the context of a ```ValidationScope```.
