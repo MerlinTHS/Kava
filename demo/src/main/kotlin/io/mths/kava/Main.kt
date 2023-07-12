@@ -1,34 +1,27 @@
 package io.mths.kava
 
-import io.mths.kava.result.Result
-import io.mths.kava.result.onFailure
-import io.mths.kava.result.result
-import io.mths.kava.validator.getValue
-import io.mths.kava.validator.nullable
-import io.mths.kava.validator.validate
+import io.mths.kava.condition.ensure
+import io.mths.kava.result.*
+import io.mths.kava.result.extensions.getValue
+import io.mths.kava.result.extensions.result
+import io.mths.kava.validator.extensions.getValue
+import io.mths.kava.validator.extensions.optional
+import io.mths.kava.validator.extensions.validate
 
 fun main() {
     validate {
-        val name by parseName("Hello Kotlin!")
+        val name: String by parseName("Hello Kotlin!")
+
         println("Bye $name!")
-
-        val status = result {
-            ensure (name) {
-                isNotBlank()
-            }
-
-            "Ok"
-        }
-
-        ensure (status !is Result.Success)
-        println("Everything works fine.")
     } onFailure {
         println("Unable to parse a name!")
+    } onSuccess {
+        println("Everything works fine.")
     }
 }
 
-fun parseName(greeting: String) = nullable {
-    ensure(greeting) {
+fun parseName(greeting: String) = result {
+    ensure (greeting) {
         isNotBlank() and endsWith("!")
     }
 

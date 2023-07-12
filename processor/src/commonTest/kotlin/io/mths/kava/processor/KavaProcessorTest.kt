@@ -98,16 +98,16 @@ class KavaProcessorTest {
     ): KotlinCompilation.Result {
         val source = SourceFile.kotlin("TestValidator.kt", code)
         val compilation = KotlinCompilation().apply {
+            this.kspWithCompilation = kspWithCompilation
             symbolProcessorProviders = listOf(KavaProcessorProvider())
             sources = listOf(source)
-            this.kotlincArguments = listOf("-Xcontext-receivers")
+            kotlincArguments = listOf("-Xcontext-receivers")
+            inheritClassPath = true
+            kspIncremental = true
 
             if (separateFiles) {
                 kspArgs["Kava.SeparateFiles"] = "true"
             }
-            inheritClassPath = true
-            kspIncremental = true
-            this.kspWithCompilation = kspWithCompilation
         }
 
         return compilation.compile()

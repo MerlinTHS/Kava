@@ -67,9 +67,9 @@ fun VersionCatalogBuilder.kava() {
 }
 
 fun VersionCatalogBuilder.kavaVersions() {
-    version("kava-annotations", "1.0.3")
+    version("kava-annotations", "1.0.4")
     version("kava-common", "1.0.2")
-    version("kava-processor", "1.0.0")
+    version("kava-processor", "1.0.1")
     version("kava-core", "1.0.0")
 }
 
